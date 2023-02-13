@@ -26,6 +26,7 @@ function arraysEqual(arr1, arr2) {
     }
 }
 
+// used in asynch functions - returns resolve with a value / reject with a reason (error)
 async function getInput() {
     return new Promise((resolve) => {
         for (let button of boardEl) {
@@ -35,6 +36,16 @@ async function getInput() {
         }
     })
 }
+
+
+// used in dom lab, this only works on event listener - evt.target.classList.add('active')
+//inserting render function here this will be for the computer array render:
+function compRender () {
+    for (index = 0; index < currLevel; index++) {
+        // need a set timeout function
+    }
+}
+
 
 
 
@@ -54,6 +65,9 @@ startEl.addEventListener('click', async (begin) => {
     playerSeq = [];
     
     while (arraysEqual(compSeq, playerSeq)) {
+        if (currLevel === 10) {
+            console.log(`congrats, you've won the game`)
+        }
         playerSeq = [];
         currLevel++
         newRand = randInteger()
@@ -62,16 +76,18 @@ startEl.addEventListener('click', async (begin) => {
         // need to render the pattern here  
         // boardEl[0] will select individual board buttons
         
-        // console.log(boardEl)
+        // checks every index that the player inputs against the same index on computer
+        // 
         for (index = 0; index < currLevel; index++) {
             playerSeq.push(await getInput())
             console.log(playerSeq[index])
             console.log(compSeq[index])
             if (playerSeq[index] !== compSeq[index]){
+                // GAME OVER HERE
                 break
             }
         }
-        
+
     }
     console.log('are the arrays equal still? ' + arraysEqual(compSeq, playerSeq))
 
