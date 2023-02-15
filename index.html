@@ -6,14 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cyber-says</title>
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
     <script src="js/main.js" defer></script>
 
 
 </head>
 <body>
-    <h1>Game Board</h1>
-    <div id="start">Start/Reset</div>
+    <div class="title">
+        <h1>Cyber-says</h1>
+        <div id="instructions">Instructions: Memorize the patten that lights up in the grid below - click the buttons in the same order that they appear.</div>
+        <div id="highscore">High Score: 0</div>
+        <div id="win">WINNER WINNER CHICKEN DINNER</div>
+        <div id="lose">YOU'VE LOSE</div>
+        <div id="start">Start/Reset</div>
+    </div>
     <div class="gamegrid">
+        <div id="image"></div>
         <div id="0" class="board"></div>
         <div id="1" class="board"></div>
         <div id="2" class="board"></div>

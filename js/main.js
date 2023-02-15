@@ -8,6 +8,8 @@ let prevRand = null
 let rand = null
 const startEl = document.getElementById('start')
 const boardEl = document.querySelectorAll('.board')
+const highScoreEl = document.getElementById('highscore')
+
 
 console.log(boardEl)
 console.log(boardEl[0])
@@ -37,12 +39,12 @@ function arraysEqual(arr1, arr2) {
     }
 }
     
-function playToggle (arr) {
-    boardEl[arr[arr.length-1]].classList.add('active')
-    setTimeout(() => {
-        boardEl[arr[arr.length-1]].classList.remove('active')
-    }, 150)
-}
+// function playToggle (arr) {
+//     boardEl[arr[arr.length-1]].classList.add('active')
+//     setTimeout(() => {
+//         boardEl[arr[arr.length-1]].classList.remove('active')
+//     }, 150)
+// }
 
 console.log('-----------------')
 // document.getElementById(compSeq[0]).classList.add('active')
@@ -70,10 +72,12 @@ function startGame() {
     nextRound();
 }
 
-
+function renderHighScore() {
+    highScoreEl.innerHTML = `High Score: ${currLevel}`
+}
 
 function nextRound () {
-    currLevel++
+    renderHighScore()
     playerSeq = []
     compSeq.push(randInteger())
     prevRand = compSeq[compSeq.length-1]
@@ -114,9 +118,9 @@ function gamePlay (evt) {
     console.log("evt.target")
     console.log(evt.target)
     playerSeq.push(parseInt(evt.target.id))
-    playToggle(playerSeq)
+    // playToggle(playerSeq)
     console.log(playerSeq)
-    if (arraysEqual(compSeq, playerSeq) && currLevel === winLevel) {
+    if (arraysEqual(compSeq, playerSeq) && currLevel === winLevel-1) {
         console.log('you have won the game!')
         // winMessage() 
         for (let button of boardEl) {
@@ -124,7 +128,8 @@ function gamePlay (evt) {
         }
     } else if (arraysEqual(compSeq, playerSeq)) {
         // roundSuccessRender()
-        setTimeout(nextRound, 400)
+        currLevel++
+        setTimeout(nextRound, 200)
     } else if (compSeq[playerSeq.length-1] !== playerSeq[playerSeq.length-1]) {
         console.log('you failed :)')
         for (let button of boardEl) {
