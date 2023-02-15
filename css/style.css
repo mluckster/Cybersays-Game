@@ -5,6 +5,7 @@
     --buttonlight: #67110A;
     --bordercolor: #292929;
   }
+
 body{
     background-image: url('https://i.imgur.com/xmrlfQg.jpg');
     background-size: cover;
@@ -16,13 +17,7 @@ body{
     margin: auto;
     font-family: 'Orbitron', sans-serif;
 }
-.title {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 1fr 1fr;
-    grid-column: 1/5;
-    grid-row: 1/3;
-}
+
 .title > * {
     background-color: var(--menuyellow);
     border: 2px solid var(--bordercolor);
@@ -31,12 +26,22 @@ body{
     align-content: center;
     display: flex;
 }
+
+.title {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr 1fr;
+    grid-column: 1/5;
+    grid-row: 1/3;
+}
+
 #instructions {
     grid-column: 1/3;
     grid-row: 2;
     height: fit-content;
     padding: 10px;
 }
+
 #highscore {
     flex-wrap: wrap;
     height: 25%;
@@ -46,6 +51,7 @@ body{
     justify-self: start;
     align-self: end;
 }
+
 #win {
     background-color: var(--menuyellow);
     border: 2px solid var(--bordercolor);
@@ -56,7 +62,12 @@ body{
     align-content: center;
     justify-content: center;
     flex-wrap: wrap;
+    animation-name: win-animation;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    position: relative;
 }
+
 #lose {
     background-color: var(--menuyellow);
     border: 2px solid var(--bordercolor);
@@ -67,7 +78,12 @@ body{
     align-content: center;
     justify-content: center;
     flex-wrap: wrap;
+    animation-name: lose-animation;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+    position: relative;
 }
+
 #start {
     grid-column: 3/5;
     grid-row: 2;
@@ -123,26 +139,28 @@ h1 {
 }
 
 #image {
-    /* background-image: linear-gradient(to bottom, rgba(146, 232, 194, 0.2), rgba(204, 48, 125, 0.8)), url('https://i.imgur.com/TkFRprt.jpg'); */
     background-size: cover;
-    border-radius: 10%;
-    grid-column: 3/7;
+    grid-column: 2/8;
     grid-row: 1/9;
 }
 
 div.active {
     background-color: var(--buttonlight);
 }
+
 #start:hover {
     background-color: var(--buttonbg);
     cursor: pointer;
 }
+
 div.success {
-    background-image: radial-gradient(ellipse, #92e8c2, transparent 65%);
+    background-image: radial-gradient(ellipse, #92e8c2, transparent 60%);
 }
+
 div.fail {
-    background-image: radial-gradient(ellipse, #67170B, transparent 65%);
+    background-image: radial-gradient(ellipse, #292929, transparent 70%);
 }
+
 [id='0'] {
     grid-column: 4;
     grid-row: 2/4;
@@ -166,4 +184,20 @@ div.fail {
 [id='4'] {
     grid-column: 4;
     grid-row: 6/8;
+}
+
+@keyframes lose-animation {
+    0%   {background-color: #67110A; top:0px; }
+    25%  {background-color: #CFC6C0; top:5px;}
+    50%  {background-color:#67110A; top:0px;}
+    75%  {background-color:#CFC6C0; top:5px;}
+    100% {background-color:#67110A; top:0px;}
+}
+
+@keyframes win-animation {
+    0%   {background-color: var(--menuyellow); top:0px;}
+    25%  {background-color: var(--buttonclick); top:5px;}
+    50%  {background-color: #79E9F1; top:0px;}
+    75%  {background-color:var(--buttonbg); top:5px;}
+    100% {background-color:var(--menuyellow); top:0px;}
 }
