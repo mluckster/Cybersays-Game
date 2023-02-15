@@ -1,5 +1,5 @@
 let currLevel = 0;
-const winLevel = 2;
+const winLevel = 5;
 const lastLevel = 10;
 let highScore = 0
 let compSeq = []
@@ -14,7 +14,7 @@ const highScoreEl = document.getElementById('highscore')
 const gameGridEl = document.querySelector('.gamegrid')
 let winId = document.createElement('p')
 let loseId = document.createElement('p')
-
+const imageEl = document.getElementById('image')
 
 console.log(boardEl)
 console.log(boardEl[0])
@@ -64,18 +64,14 @@ console.log(startEl)
 startEl.addEventListener('click', startGame)
 
 function startGame() {
+    imageEl.classList.remove('fail')
+    imageEl.classList.remove('success')
     winId.remove()
     loseId.remove()
     currLevel = 0;
     compSeq = [];
     playerSeq = [];
-    // console.log(begin.target)
-    for (let button of boardEl) {
-        button.addEventListener('click', gamePlay)
-    }
-    for (let button of boardEl) {
-        button.classList.remove('active')
-    }
+    addButtons() //I might be able to take this out
     nextRound();
 }
 
@@ -93,6 +89,7 @@ function nextRound () {
 
 // THIS FUNCTION NEED TO WORK ON
 function winMessage() {
+    imageEl.classList.add('success')
     console.log('you have won the game!')
     winId = document.createElement('p')
     winId.id = 'win'
@@ -110,19 +107,13 @@ function loseMessage() {
 
 // this breaks the comp render and the start button for some reason
 function roundSuccessRender() {
-    console.log('game board element')
-    console.log(document.querySelectorAll('.board'))
-    console.log(boardEl)
+    imageEl.classList.add('success')
     setTimeout(() => { 
-        for (let board of boardEl) {
-            board.style.backgroundColor = 'black'
-        }
-        setTimeout(() => { 
-            for (let board of boardEl) {
-                board.style.backgroundColor = " #850000"
-            }
-        }, 200)
-    }, 200)
+        imageEl.classList.remove('success')
+    }, 150)
+}
+function failRender() {
+    imageEl.classList.add('fail')
 }
 
 function updateHighScore() {
@@ -131,6 +122,17 @@ function updateHighScore() {
         highScore = currLevel
     }
 }
+function removeButtons() {
+    for (let button of boardEl) {
+        button.removeEventListener ('click', gamePlay)
+    }
+}
+function addButtons() {
+    for (let button of boardEl) {
+        button.addEventListener('click', gamePlay)
+    }
+}
+
 
 function gamePlay (evt) {
     console.log("evt.target")
@@ -139,36 +141,27 @@ function gamePlay (evt) {
     // playToggle(playerSeq)
     console.log(playerSeq)
     if (arraysEqual(compSeq, playerSeq) && currLevel === winLevel-1) {
-        console.log('this is high score before and after the update function')
-        console.log(highScore)
         updateHighScore()
         renderHighScore()
-        console.log(highScore)
-        console.log('you have won the game!')
         winMessage() 
-        for (let button of boardEl) {
-            button.removeEventListener ('click', gamePlay)
-        }
+        removeButtons()
     } else if (arraysEqual(compSeq, playerSeq)) {
-        // roundSuccessRender()
+        roundSuccessRender()
         updateHighScore()
         renderHighScore()
         setTimeout(nextRound, 200)
     } else if (compSeq[playerSeq.length-1] !== playerSeq[playerSeq.length-1]) {
         loseMessage()
-        for (let button of boardEl) {
-            button.removeEventListener ('click', gamePlay)
-        }
+        failRender()
+        removeButtons()
     } else {
-        return
+        roundSuccessRender()
     }
 }
 
 function compRender (arr) {
     startEl.removeEventListener('click', startGame)
-    for (let button of boardEl) {
-        button.removeEventListener('click', gamePlay)
-    }
+    removeButtons()
     let indComp = 0
     let lightIndex = 0     
     while (indComp < arr.length) {
@@ -179,9 +172,7 @@ function compRender (arr) {
                 element.classList.remove('active')
                 lightIndex++
                 if (lightIndex === arr.length) {
-                    for (let button of boardEl) {
-                        button.addEventListener('click', gamePlay)
-                    }
+                    addButtons()
                     startEl.addEventListener('click', startGame)
                 }
             }, 800)
