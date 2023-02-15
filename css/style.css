@@ -45,8 +45,26 @@ body{
     align-self: end;
 }
 #win {
+    background-color: yellow;
+    border: 2px solid rgb(255, 0, 0);
+    border-radius: 20%;
+    grid-row: 4/6;
+    grid-column: 3/7;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 #lose {
+    background-color: yellow;
+    border: 2px solid rgb(255, 0, 0);
+    border-radius: 20%;
+    grid-row: 4/6;
+    grid-column: 3/7;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 #start {
     grid-column: 3/5;

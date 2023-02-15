@@ -1,6 +1,7 @@
 let currLevel = 0;
-const winLevel = 3;
+const winLevel = 2;
 const lastLevel = 10;
+let highScore = 0
 let compSeq = []
 let playerSeq = []
 console.log(playerSeq.length ===0)
@@ -9,6 +10,10 @@ let rand = null
 const startEl = document.getElementById('start')
 const boardEl = document.querySelectorAll('.board')
 const highScoreEl = document.getElementById('highscore')
+// const titlesEl = document.querySelector('.title')
+const gameGridEl = document.querySelector('.gamegrid')
+let winId = document.createElement('p')
+let loseId = document.createElement('p')
 
 
 console.log(boardEl)
@@ -59,6 +64,8 @@ console.log(startEl)
 startEl.addEventListener('click', startGame)
 
 function startGame() {
+    winId.remove()
+    loseId.remove()
     currLevel = 0;
     compSeq = [];
     playerSeq = [];
@@ -73,11 +80,10 @@ function startGame() {
 }
 
 function renderHighScore() {
-    highScoreEl.innerHTML = `High Score: ${currLevel}`
+    highScoreEl.innerHTML = `High Score: ${highScore}`
 }
 
 function nextRound () {
-    renderHighScore()
     playerSeq = []
     compSeq.push(randInteger())
     prevRand = compSeq[compSeq.length-1]
@@ -88,12 +94,18 @@ function nextRound () {
 // THIS FUNCTION NEED TO WORK ON
 function winMessage() {
     console.log('you have won the game!')
-    // document.querySelectorAll('.board').style.backgroundColor = 'blue'
-    console.log(document.querySelectorAll('.gamegrid>.board'))
-    document.querySelectorAll('.gamegrid>.board').style.backgroundColor = 'blue'
-    const win = document.createElement('div')
-    win.classList.add('win-message')
-    win.textContent = `You've won the Game!`
+    winId = document.createElement('p')
+    winId.id = 'win'
+    gameGridEl.appendChild(winId)
+    winId.innerHTML = 'WINNER WINNER CHICKEN DINNER'
+
+}
+function loseMessage() {
+    console.log('you failed :)')
+    loseId = document.createElement('p')
+    loseId.id = 'lose'
+    gameGridEl.appendChild(loseId)
+    loseId.innerHTML = 'YOU LOST L0L'
 }
 
 // this breaks the comp render and the start button for some reason
@@ -113,6 +125,12 @@ function roundSuccessRender() {
     }, 200)
 }
 
+function updateHighScore() {
+    currLevel++
+    if (currLevel>highScore) {
+        highScore = currLevel
+    }
+}
 
 function gamePlay (evt) {
     console.log("evt.target")
@@ -121,17 +139,23 @@ function gamePlay (evt) {
     // playToggle(playerSeq)
     console.log(playerSeq)
     if (arraysEqual(compSeq, playerSeq) && currLevel === winLevel-1) {
+        console.log('this is high score before and after the update function')
+        console.log(highScore)
+        updateHighScore()
+        renderHighScore()
+        console.log(highScore)
         console.log('you have won the game!')
-        // winMessage() 
+        winMessage() 
         for (let button of boardEl) {
             button.removeEventListener ('click', gamePlay)
         }
     } else if (arraysEqual(compSeq, playerSeq)) {
         // roundSuccessRender()
-        currLevel++
+        updateHighScore()
+        renderHighScore()
         setTimeout(nextRound, 200)
     } else if (compSeq[playerSeq.length-1] !== playerSeq[playerSeq.length-1]) {
-        console.log('you failed :)')
+        loseMessage()
         for (let button of boardEl) {
             button.removeEventListener ('click', gamePlay)
         }
