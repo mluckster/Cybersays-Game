@@ -1,19 +1,24 @@
+// Variable declaration 
 let currLevel = 0;
 const winLevel = 10;
 let highScore = 0
 let compSeq = []
 let playerSeq = []
-console.log(playerSeq.length ===0)
 let prevRand = null
 let rand = null
+
+
+// Element objects
 const startEl = document.getElementById('start')
 const boardEl = document.querySelectorAll('.board')
 const highScoreEl = document.getElementById('highscore')
 const gameGridEl = document.querySelector('.gamegrid')
+const imageEl = document.getElementById('image')
 let winId = document.createElement('p')
 let loseId = document.createElement('p')
-const imageEl = document.getElementById('image')
 
+
+// Straightforward Functions
 // Creates a random integer between 0 and 4 (value of new comp array index)
 function randInteger() { 
     do {
@@ -36,89 +41,55 @@ function arraysEqual(arr1, arr2) {
     }
 }
 
-startEl.addEventListener('click', startGame)
+function removeButtons() {
+    for (let button of boardEl) {
+        button.removeEventListener ('click', gamePlay)
+    }
+}
 
-function startGame() {
-    imageEl.classList.remove('fail')
-    imageEl.classList.remove('success')
-    winId.remove()
-    loseId.remove()
-    currLevel = 0;
-    compSeq = [];
-    playerSeq = [];
-    addButtons() //I might be able to take this out
-    nextRound();
+function addButtons() {
+    for (let button of boardEl) {
+        button.addEventListener('click', gamePlay)
+    }
 }
-function renderHighScore() {
-    highScoreEl.innerHTML = `High Score: ${highScore}`
-}
-function nextRound () {
-    playerSeq = []
-    compSeq.push(randInteger())
-    prevRand = compSeq[compSeq.length-1]
-    console.log('computer sequence is ' + compSeq)
-    compRender(compSeq)
-}
-function winMessage() {
-    imageEl.classList.add('success')
-    winId.id = 'win'
-    gameGridEl.appendChild(winId)
-    winId.innerHTML = 'WINNER WINNER CHICKEN DINNER'
-}
-function loseMessage() {
-    loseId.id = 'lose'
-    gameGridEl.appendChild(loseId)
-    loseId.innerHTML = 'YOU LOST L0L'
-}
-function roundSuccessRender() {
-    imageEl.classList.add('success')
-    setTimeout(() => { 
-        imageEl.classList.remove('success')
-    }, 150)
-}
-function failRender() {
-    imageEl.classList.add('fail')
-}
+
 function updateHighScore() {
     currLevel++
     if (currLevel>highScore) {
         highScore = currLevel
     }
 }
-function removeButtons() {
-    for (let button of boardEl) {
-        button.removeEventListener ('click', gamePlay)
-    }
+
+
+// Render Functions
+function renderHighScore() {
+    highScoreEl.innerHTML = `High Score: ${highScore}`
 }
-function addButtons() {
-    for (let button of boardEl) {
-        button.addEventListener('click', gamePlay)
-    }
+
+function winMessage() {
+    imageEl.classList.add('success')
+    winId.id = 'win'
+    gameGridEl.appendChild(winId)
+    winId.innerHTML = 'WINNER WINNER CHICKEN DINNER'
 }
-function gamePlay (evt) {
-    console.log("evt.target")
-    console.log(evt.target)
-    playerSeq.push(parseInt(evt.target.id))
-    // playToggle(playerSeq)
-    console.log(playerSeq)
-    if (arraysEqual(compSeq, playerSeq) && currLevel === winLevel-1) {
-        updateHighScore()
-        renderHighScore()
-        winMessage() 
-        removeButtons()
-    } else if (arraysEqual(compSeq, playerSeq)) {
-        roundSuccessRender()
-        updateHighScore()
-        renderHighScore()
-        setTimeout(nextRound, 200)
-    } else if (compSeq[playerSeq.length-1] !== playerSeq[playerSeq.length-1]) {
-        loseMessage()
-        failRender()
-        removeButtons()
-    } else {
-        roundSuccessRender()
-    }
+
+function loseMessage() {
+    loseId.id = 'lose'
+    gameGridEl.appendChild(loseId)
+    loseId.innerHTML = 'YOU LOST L0L'
 }
+
+function roundSuccessRender() {
+    imageEl.classList.add('success')
+    setTimeout(() => { 
+        imageEl.classList.remove('success')
+    }, 150)
+}
+
+function failRender() {
+    imageEl.classList.add('fail')
+}
+
 function compRender (arr) {
     startEl.removeEventListener('click', startGame)
     removeButtons()
@@ -138,5 +109,53 @@ function compRender (arr) {
             }, 800)
         }, 800 + indComp*800)
         indComp++
+    }
+}
+
+
+// Main Code for Game Operation
+startEl.addEventListener('click', startGame)
+
+function startGame() {
+    imageEl.classList.remove('fail')
+    imageEl.classList.remove('success')
+    winId.remove()
+    loseId.remove()
+    currLevel = 0;
+    compSeq = [];
+    playerSeq = [];
+    addButtons()
+    nextRound();
+}
+
+function nextRound () {
+    playerSeq = []
+    compSeq.push(randInteger())
+    prevRand = compSeq[compSeq.length-1]
+    console.log('computer sequence is ' + compSeq)
+    compRender(compSeq)
+}
+
+function gamePlay (evt) {
+    console.log("evt.target")
+    console.log(evt.target)
+    playerSeq.push(parseInt(evt.target.id))
+    console.log(playerSeq)
+    if (arraysEqual(compSeq, playerSeq) && currLevel === winLevel-1) {
+        updateHighScore()
+        renderHighScore()
+        winMessage() 
+        removeButtons()
+    } else if (arraysEqual(compSeq, playerSeq)) {
+        roundSuccessRender()
+        updateHighScore()
+        renderHighScore()
+        setTimeout(nextRound, 200)
+    } else if (compSeq[playerSeq.length-1] !== playerSeq[playerSeq.length-1]) {
+        loseMessage()
+        failRender()
+        removeButtons()
+    } else {
+        roundSuccessRender()
     }
 }

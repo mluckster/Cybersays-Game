@@ -1,6 +1,6 @@
 :root {
     --menuyellow:  #fdf500;
-    --buttonbg: #cb1dcd;
+    --buttonbg: #74A94E;
     --buttonclick: #9370db;
     --buttonlight: #67110A;
     --bordercolor: #292929;
@@ -149,12 +149,12 @@ div.active {
 }
 
 #start:hover {
-    background-color: var(--buttonbg);
+    background-color: #cb1dcd;;
     cursor: pointer;
 }
 
 div.success {
-    background-image: radial-gradient(ellipse, #92e8c2, transparent 60%);
+    background-image: radial-gradient(ellipse, #41ECF2, transparent 60%);
 }
 
 div.fail {
@@ -196,8 +196,8 @@ div.fail {
 
 @keyframes win-animation {
     0%   {background-color: var(--menuyellow); top:0px;}
-    25%  {background-color: var(--buttonclick); top:5px;}
+    25%  {background-color: var(--buttonbg); top:5px;}
     50%  {background-color: #79E9F1; top:0px;}
-    75%  {background-color:var(--buttonbg); top:5px;}
+    75%  {background-color:#cb1dcd;; top:5px;}
     100% {background-color:var(--menuyellow); top:0px;}
 }
