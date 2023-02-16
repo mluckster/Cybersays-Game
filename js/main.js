@@ -6,6 +6,7 @@ let compSeq = []
 let playerSeq = []
 let prevRand = null
 let rand = null
+let renderDuration = 800
 
 
 // Element objects
@@ -13,9 +14,13 @@ const startEl = document.getElementById('start')
 const boardEl = document.querySelectorAll('.board')
 const highScoreEl = document.getElementById('highscore')
 const gameGridEl = document.querySelector('.gamegrid')
-const imageEl = document.getElementById('image')
+const splashEl = document.getElementById('splash')
 let winId = document.createElement('p')
 let loseId = document.createElement('p')
+const slowEl = document.getElementById('slow')
+const fastEl = document.getElementById('fast')
+const normalEl = document.getElementById('normal')
+const extremeEl = document.getElementById('extreme')
 
 
 // Straightforward Functions
@@ -67,7 +72,7 @@ function renderHighScore() {
 }
 
 function winMessage() {
-    imageEl.classList.add('success')
+    splashEl.classList.add('success')
     winId.id = 'win'
     gameGridEl.appendChild(winId)
     winId.innerHTML = 'WINNER WINNER CHICKEN DINNER'
@@ -80,14 +85,14 @@ function loseMessage() {
 }
 
 function roundSuccessRender() {
-    imageEl.classList.add('success')
+    splashEl.classList.add('success')
     setTimeout(() => { 
-        imageEl.classList.remove('success')
+        splashEl.classList.remove('success')
     }, 150)
 }
 
 function failRender() {
-    imageEl.classList.add('fail')
+    splashEl.classList.add('fail')
 }
 
 function compRender (arr) {
@@ -106,19 +111,46 @@ function compRender (arr) {
                     addButtons()
                     startEl.addEventListener('click', startGame)
                 }
-            }, 800)
-        }, 800 + indComp*800)
+            }, renderDuration)
+        }, 600 + indComp*renderDuration)
         indComp++
     }
 }
 
 
+
+function changeDiff(evt) {
+    if (evt.target.id === 'extreme') {
+        normalEl.classList.remove("selector")
+        extremeEl.classList.add('selector')
+    } else if (evt.target.id === 'normal') {
+        normalEl.classList.add("selector")
+        extremeEl.classList.remove('selector')
+    }
+}
+function changeSpeed(evt) {
+    if (evt.target.id === 'fast') {
+        slowEl.classList.remove("selector")
+        fastEl.classList.add('selector')
+        renderDuration = 200
+    } else if (evt.target.id === 'slow') {
+        slowEl.classList.add("selector")
+        fastEl.classList.remove('selector')
+        renderDuration = 800
+    }
+}
+
 // Main Code for Game Operation
 startEl.addEventListener('click', startGame)
+slowEl.addEventListener('click', changeSpeed)
+fastEl.addEventListener('click', changeSpeed)
+normalEl.addEventListener('click', changeDiff)
+extremeEl.addEventListener('click', changeDiff)
+
 
 function startGame() {
-    imageEl.classList.remove('fail')
-    imageEl.classList.remove('success')
+    splashEl.classList.remove('fail')
+    splashEl.classList.remove('success')
     winId.remove()
     loseId.remove()
     currLevel = 0;
@@ -130,17 +162,28 @@ function startGame() {
 
 function nextRound () {
     playerSeq = []
-    compSeq.push(randInteger())
+    if (extremeEl.classList.contains('selector')) {
+        console.log('testing hard mode')
+        console.log('comp sequence')
+        console.log(compSeq)
+        compSeq = []
+        console.log(compSeq)
+
+        for (i=0; i<=currLevel; i++) {
+            compSeq.push(randInteger())
+            prevRand = compSeq[compSeq.length-1]
+        }
+        console.log(compSeq)
+
+    } else {
+        compSeq.push(randInteger())
+    }
     prevRand = compSeq[compSeq.length-1]
-    console.log('computer sequence is ' + compSeq)
     compRender(compSeq)
 }
 
 function gamePlay (evt) {
-    console.log("evt.target")
-    console.log(evt.target)
     playerSeq.push(parseInt(evt.target.id))
-    console.log(playerSeq)
     if (arraysEqual(compSeq, playerSeq) && currLevel === winLevel-1) {
         updateHighScore()
         renderHighScore()
