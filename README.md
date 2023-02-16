@@ -1,28 +1,28 @@
 # <br>CYBERSAYS GAME
 
-### Cyberpunk Themed Simon Game
+### Cyberpunk Themed Simon Game - [play](https://mluckster.github.io/Cybersays-Game/)
 
-This is a re-imagining of the game Simon - set to the backdrop of the cyberpunk aesthetic. Sit back, relax, and get memorizing. Click the circles in the order that they light up! 
+This is a recreation of the game Simon - with a cyberpunk aesthetic. Sit back, relax, and get memorizing. Click the circles in the order they light up! 
 
 #### Features
-- Ten Intense Levels
+- Eight Intense Levels
 - Two Difficulty Modifiers
     - Pick up the speed with the fast modifier
-    - Xtreme modifier - the pattern changes every round!
+    - Change the pattern every round by enabling the Xtrme modifier
 
 #### Background
 
-The insipriation for this kind of game came from the human benchmark website. The small games were always fun to play every so often to see how well you would do. I decided to go with a game similar to the 'visual memory' test on the site. I wanted to have a slight twist on the orientation of the game board and a more stylish look to the game, which was how the asymmetrical game grid came from. The style and look I wanted was something between Hotline Miami and Cyberpunk 2077.
+The inspiration for this game came from the game "Simon" and the human benchmark website's small test for visual memory. My goal was to put a slight twist on the orientation of the game board and add a more stylish look, so I decided to make an asymmetrical grid, and incorporate a cyberpunk aesthetic.
 
 ## Screenshots
 
 ### Game Grid:
 
-<img src="https://i.imgur.com/ZmjKWCr.png" width="400">
+<img src="https://i.imgur.com/gdA7KGr.png" width="400">
 
-### Win and Lose Pop Up
+### Interactive Features
 
-<img src="https://i.imgur.com/meLZVK0.png" height="150"> <img src="https://i.imgur.com/RfGMjRA.png" height="150">
+<img src="https://i.imgur.com/IpkMtXA.png" height="150"> <img src="https://i.imgur.com/AL6tDka.png" height="150"> <img src="https://i.imgur.com/iAGWqPt.png" height="150">
 
 ## Technologies Used
 
@@ -35,18 +35,21 @@ The insipriation for this kind of game came from the human benchmark website. Th
 Link to play: [Cybersays Game](https://mluckster.github.io/Cybersays-Game/)
 
 - Push the 'start/reset' button to begin the game
-    - This button will be used if you would like to reset your game mid-way, or if lose/win and want to play again
+    - This button will be used if you would like to reset your game mid-way, or if you win/lose and want to play again
     - Note: button is disabled while computer is rendering the button order
-- Wait until the computer is done rendering the button order before you begin clicking
-- Victory occurs when you have memorized 10 buttons and have clicked them in the correct sequence 
+- Wait until the computer is done showing you the full sequence before you begin clicking
+- Victory occurs when you have memorized 8 buttons and have clicked them in the correct sequence 
+- For added challenge select the difficulty modifiers and replay!
 
-## Icebox Items
-
-MODIFY in future modifications of readme/game depending on what I get done by FRIDAY
+## Next Steps
 
 - Sound cue for each successful button press
 - Background music
-- Difficulty modifiers
-    - Change grid size
-    - Ability to change speed at which the button prompts are displayed
-    - New sequence every round
+- More difficulty modifiers
+    - Change grid size (small/med/large)
+    - Choose win level (low/med/high)
+- Mobile friendly and more accessible on different devices
+
+## Sources/3rd Party Assets
+
+[Background Pixel Art](https://wallpapersden.com/cyberpunk-city-pixel-art-wallpaper/2560x1600/)

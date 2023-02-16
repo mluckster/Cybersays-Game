@@ -1,8 +1,8 @@
 :root {
     --menuyellow:  #fdf500;
     --buttonbg: #FCF500;
-    --buttonclick:#BA32C6 ;
-    --buttonlight: #41ECF2;
+    --buttonclick: #41ECF2;
+    --buttonlight: #BA32C6;
     --bordercolor: #292929;
   }
 
@@ -171,7 +171,7 @@ h1 {
     grid-row: 1;
     margin: auto;
     height: 60%;
-    width: 25%;
+    width: 300px;
     flex-wrap: wrap;
 }
 
@@ -223,11 +223,11 @@ div.active {
 }
 
 div.success {
-    background-image: radial-gradient(ellipse, #41ECF2, transparent 60%);
+    background-image: radial-gradient(ellipse, #70b93b, transparent 60%);
 }
 
 div.fail {
-    background-image: radial-gradient(ellipse, #292929, transparent 70%);
+    background-image: radial-gradient(ellipse, #710B01, transparent 70%);
 }
 
 [id='0'] {

@@ -1,6 +1,6 @@
 // Variable declaration 
 let currLevel = 0;
-const winLevel = 10;
+const winLevel = 8;
 let highScore = 0
 let compSeq = []
 let playerSeq = []
@@ -43,6 +43,28 @@ function arraysEqual(arr1, arr2) {
             }
         }
         return true
+    }
+}
+
+function changeDiff(evt) {
+    if (evt.target.id === 'extreme') {
+        normalEl.classList.remove("selector")
+        extremeEl.classList.add('selector')
+    } else if (evt.target.id === 'normal') {
+        normalEl.classList.add("selector")
+        extremeEl.classList.remove('selector')
+    }
+}
+
+function changeSpeed(evt) {
+    if (evt.target.id === 'fast') {
+        slowEl.classList.remove("selector")
+        fastEl.classList.add('selector')
+        renderDuration = 200
+    } else if (evt.target.id === 'slow') {
+        slowEl.classList.add("selector")
+        fastEl.classList.remove('selector')
+        renderDuration = 800
     }
 }
 
@@ -97,6 +119,8 @@ function failRender() {
 
 function compRender (arr) {
     startEl.removeEventListener('click', startGame)
+    slowEl.removeEventListener('click', changeSpeed)
+    fastEl.removeEventListener('click', changeSpeed)
     removeButtons()
     let indComp = 0
     let lightIndex = 0     
@@ -109,34 +133,13 @@ function compRender (arr) {
                 lightIndex++
                 if (lightIndex === arr.length) {
                     addButtons()
+                    slowEl.addEventListener('click', changeSpeed)
+                    fastEl.addEventListener('click', changeSpeed)
                     startEl.addEventListener('click', startGame)
                 }
             }, renderDuration)
         }, 600 + indComp*renderDuration)
         indComp++
-    }
-}
-
-
-
-function changeDiff(evt) {
-    if (evt.target.id === 'extreme') {
-        normalEl.classList.remove("selector")
-        extremeEl.classList.add('selector')
-    } else if (evt.target.id === 'normal') {
-        normalEl.classList.add("selector")
-        extremeEl.classList.remove('selector')
-    }
-}
-function changeSpeed(evt) {
-    if (evt.target.id === 'fast') {
-        slowEl.classList.remove("selector")
-        fastEl.classList.add('selector')
-        renderDuration = 200
-    } else if (evt.target.id === 'slow') {
-        slowEl.classList.add("selector")
-        fastEl.classList.remove('selector')
-        renderDuration = 800
     }
 }
 
@@ -163,17 +166,12 @@ function startGame() {
 function nextRound () {
     playerSeq = []
     if (extremeEl.classList.contains('selector')) {
-        console.log('testing hard mode')
-        console.log('comp sequence')
-        console.log(compSeq)
         compSeq = []
-        console.log(compSeq)
 
         for (i=0; i<=currLevel; i++) {
             compSeq.push(randInteger())
             prevRand = compSeq[compSeq.length-1]
         }
-        console.log(compSeq)
 
     } else {
         compSeq.push(randInteger())
